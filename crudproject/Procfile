@@ -1,0 +1,2 @@
+web: gunicorn crudproject.wsgi --log-file -
+
