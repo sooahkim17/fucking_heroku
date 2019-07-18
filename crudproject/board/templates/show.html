@@ -1,0 +1,121 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% if user.is_authenticated %}
+{{user.last_name}} {{user.first_name}}님 환영합니다. 
+<a class="btn btn-primary btn-lg"  href="{% url 'signout' %}">
+	<h6 class="display-6">로그아웃</h6>
+</a>
+{% else %} 
+<a class="btn btn-primary btn-lg"  href="{% url 'signup' %}">
+	<h6 class="display-6">회원가입</h6>
+</a>
+<a class="btn btn-primary btn-lg"  href="{% url 'signin' %}">
+	<h6 class="display-6">로그인</h6>
+</a>
+{%endif%}
+{% if user.is_authenticated %}
+<h4><a href="{% url 'post' %}"><글 작성하러 가기></a></h4>
+{% for board in boards.all %}
+     <div class="jumbotron">
+         <a  class="btn btn-primary btn-lg"  href="{% url 'detail' board.id %}">
+             <h4 class="display-6">제목:{{board.title}}</h4>
+         </a>
+        <p class="lead">내용:{{board.body}}</p>
+        <small class="text-muted">{{board.pub_date}}</small>
+     </div>
+{%endfor%}
+{% else %} 
+<p>로그인을 하셔야 글작성이 가능한 게시판 입니다.</p>
+{%endif%}
+<meta http-equiv="Content-Type" Content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<style type="text/css">
+
+	body {font-size:11pt; padding:0; margin:0; text-align: center;}
+	h3 {color: #85144b; font-size: 14pt; margin:10 auto; padding: 10px;}
+	.contents {width: 800px; height: 400px; background-color: #d6d6d6; margin: 0 auto;}
+	
+	/* banner */
+	.banner {position: relative; width: 340px; height: 210px; top: 50px;  margin:0 auto; padding:0; overflow: hidden;}
+	.banner ul {position: absolute; margin: 0px; padding:0; list-style: none; }
+	.banner ul li {float: left; width: 340px; height: 210px; margin:0; padding:0;}
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script language="JavaScript">
+
+	$(document).ready(function() {
+		
+		var $banner = $(".banner").find("ul");
+
+		var $bannerWidth = $banner.children().outerWidth();
+		var $bannerHeight = $banner.children().outerHeight(); 
+        var $bannerLength = $banner.children().length;
+		var rollingId;
+
+		
+		rollingId = setInterval(function() { rollingStart(); }, 3000);
+		
+		banner.mouseover(function(){
+			
+			clearInterval(rollingId);
+			$(this).css("cursor", "pointer");
+		});
+		
+		banner.mouseout(function(){
+			rollingId = setInterval(function() { rollingStart(); }, 3000);
+			$(this).css("cursor", "default");
+		});
+		
+		function rollingStart() {
+			$banner.css("width", $bannerWidth * $bannerLength + "px");
+			$banner.css("height", $bannerHeight + "px");
+			
+			$banner.animate({left: - $bannerWidth + "px"}, 1500, function() { 
+				
+				$(this).append("<li>" + $(this).find("li:first").html() + "</li>");
+				
+				$(this).find("li:first").remove();
+				
+				$(this).css("left", 0);
+				
+			});
+		}
+	}); 
+  
+</script>
+  <script type="text/JavaScript">
+	var jbBtn = document.createElement( 'h3' );
+	var jbBtnText = document.createTextNode( '이미지 자동 슬라이드' );
+	jbBtn.appendChild( jbBtnText );
+	document.body.appendChild( jbBtn );
+
+	function getElement(){
+		var al=document.getElementById("1");
+		alert(al.width);
+
+	}
+
+  </script>
+
+</head>
+<body>
+	<div class="contents">
+
+	
+
+		<div class="banner">
+			<ul>
+				<li><img id="1" onclick="getElement();" src="https://cdn.pixabay.com/photo/2016/02/01/16/10/eye-1173863__340.jpg" width="340" height="210px"></li>
+				<li><img id="1" onclick="getElement();" src="https://cdn.pixabay.com/photo/2017/12/30/13/25/portrait-3050076__340.jpg" width="340" height="210px"></li>
+				<li><img id="1" onclick="getElement();" src="https://cdn.pixabay.com/photo/2015/07/09/22/45/tree-838667__340.jpg" width="340" height="210px"></li>
+				<li><img id="1" onclick="getElement();" src="https://cdn.pixabay.com/photo/2016/03/05/20/01/art-1238602__340.jpg" width="340" height="210px"></li>
+				<li><img id="1" onclick="getElement();" src="https://cdn.pixabay.com/photo/2015/07/31/15/01/guitar-869217__340.jpg" width="340" height="210px"></li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+</html>
